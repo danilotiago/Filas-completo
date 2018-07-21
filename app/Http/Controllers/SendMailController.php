@@ -7,8 +7,19 @@ use Illuminate\Http\Request;
 
 class SendMailController extends Controller
 {
-    public function enviaEmail()
+    public function enviaEmail(Request $request)
     {
-        $this->dispatch(new SendMailJob());
+        $data = $request->all();
+
+        $email = new \stdClass();
+        $email->destinatario = $data['destinatario'];
+        $email->mensagem = $data['mensagem'];
+
+        $quantiadadeEnvios = $data['quantidade'];
+        while ($quantiadadeEnvios > 0) {
+            $this->dispatch(new SendMailJob($email));
+            $quantiadadeEnvios--;
+        }
+
     }
 }

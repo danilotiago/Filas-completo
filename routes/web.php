@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/send-mail', function () {
+    return view('envia-email');
+});
+
+Route::post('/send-mail', 'SendMailController@enviaEmail');
