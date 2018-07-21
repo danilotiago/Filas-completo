@@ -10,15 +10,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class WelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
+    /**
+     * @var string
+     */
+    private $mensagem;
 
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param string $mensagem
      */
-    public function __construct()
+    public function __construct(string $mensagem)
     {
-        //
+        $this->mensagem = $mensagem;
     }
 
     /**
@@ -28,6 +32,8 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        return $this->from(env("MAIL_TO"))->view('welcome');
+        return $this->from(env("MAIL_FROM"))->view('emails.welcome-mail')->with([
+            'mensagem' => $this->mensagem
+        ]);
     }
 }

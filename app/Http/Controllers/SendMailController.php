@@ -17,7 +17,7 @@ class SendMailController extends Controller
 
         $quantiadadeEnvios = $data['quantidade'];
         while ($quantiadadeEnvios > 0) {
-            $this->dispatch(new SendMailJob($email));
+            dispatch(new SendMailJob($email))->onQueue('emails');
             $quantiadadeEnvios--;
         }
 

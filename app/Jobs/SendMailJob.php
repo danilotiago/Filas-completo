@@ -2,12 +2,13 @@
 
 namespace App\Jobs;
 
+use App\Mail\WelcomeMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use PhpParser\Node\Expr\Cast\Object_;
+use Illuminate\Support\Facades\Mail;
 
 class SendMailJob implements ShouldQueue
 {
@@ -34,6 +35,6 @@ class SendMailJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+        Mail::to($this->email->destinatario)->send(new WelcomeMail($this->email->mensagem));
     }
 }
